@@ -1,25 +1,19 @@
-require "./spec_helper"
-require "../src/integration"
-require "http/mock"
+require "http/client"
 
-describe WebPerfMonitor::Integration do
-  it "sends report to Apple tools" do
-    report = "{\"timestamp\": \"2024-07-09T12:00:00Z\", \"analysis\": {\"https://example.com\": 0.123}}"
+module WebPerfMonitor
+  module Integration
+    APPLE_API_ENDPOINT = "https://apple-internal-tools.example.com/api/reports" # Hypothetical endpoint
 
-    HTTP::Mock.start do |request|
-      request.post(WebPerfMonitor::Integration::APPLE_API_ENDPOINT, body: report).to_return(status_code: 200)
-      response = WebPerfMonitor::Integration.send_to_apple_tools(report)
-      response.should eq "Successfully sent report to Apple tools"
-    end
-  end
+    def self.send_to_apple_tools(report : String)
+      response = HTTP::Client.post(APPLE_API_ENDPOINT, headers: HTTP::Headers{"Content-Type" => "application/json"}, body: report)
 
-  it "handles failure when sending report to Apple tools" do
-    report = "{\"timestamp\": \"2024-07-09T12:00:00Z\", \"analysis\": {\"https://example.com\": 0.123}}"
-
-    HTTP::Mock.start do |request|
-      request.post(WebPerfMonitor::Integration::APPLE_API_ENDPOINT, body: report).to_return(status_code: 500, body: "Internal Server Error")
-      response = WebPerfMonitor::Integration.send_to_apple_tools(report)
-      response.should eq "Failed to send report to Apple tools: 500 - Internal Server Error"
+      if response.status_code == 200
+        puts "Successfully sent report to Apple tools"
+      else
+        puts "Failed to send report to Apple tools: #{response.status_code} - #{response.body}"
+      end
+    rescue ex : Exception
+      puts "Exception occurred while sending report: #{ex.message}"
     end
   end
 end
