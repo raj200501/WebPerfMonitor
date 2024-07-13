@@ -1,0 +1,8 @@
+lib
+bin
+.crystal
+*.o
+*.dwarf
+*.s
+*.a
+__pycache__/
