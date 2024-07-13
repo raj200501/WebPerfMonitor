@@ -12,9 +12,9 @@ module WebPerfMonitor
     loop do
       metrics = monitor.collect_metrics
       analysis = analyzer.analyze(metrics)
-      report.generate(analysis)
+      report_content = report.generate(analysis)
 
-      Integration.send_to_apple_tools(report)
+      Integration.send_to_apple_tools(report_content)
 
       sleep Config::MONITOR_INTERVAL
     end
