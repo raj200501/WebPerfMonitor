@@ -3,7 +3,7 @@ module WebPerfMonitor
     def analyze(metrics)
       grouped = {} of String => Array(Metric)
       metrics.each do |metric|
-        grouped[metric.url] ||= []
+        grouped[metric.url] ||= [] of Metric
         grouped[metric.url] << metric
       end
 
