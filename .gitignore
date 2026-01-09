@@ -1,8 +1,5 @@
-lib
-bin
-.crystal
-*.o
+/bin
+/tmp
+/reports
+/.tools
 *.dwarf
-*.s
-*.a
-__pycache__/

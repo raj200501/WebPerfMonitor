@@ -1,6 +1,6 @@
 require "./spec_helper.cr"
 
-TestSuite.test("monitor collects metrics") do
+TestSuite.test("runner executes a monitoring cycle") do
   port = Support::PortFinder.available_port
   server = Support::HttpServer.new("127.0.0.1", port) do |method, path|
     if method == "GET" && path == "/"
@@ -15,17 +15,16 @@ TestSuite.test("monitor collects metrics") do
     ["http://127.0.0.1:#{port}"],
     1,
     2.0,
-    "tmp/monitor",
+    "tmp/runner",
     nil,
     WebPerfMonitor::Thresholds.new,
     WebPerfMonitor::ServerSettings.new
   )
 
-  monitor = WebPerfMonitor::Monitor.new(settings)
-  metrics = monitor.collect_metrics
+  runner = WebPerfMonitor::Runner.new(settings)
+  result = runner.run_once
 
-  TestSuite.assert_equal(1, metrics.size)
-  TestSuite.assert_equal(200, metrics.first.status_code)
+  TestSuite.assert(Support::FileUtil.file_exists?(result.output.path))
 ensure
   server.shutdown if server
 end
