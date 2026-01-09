@@ -1,15 +1,1 @@
-name: CI
 
-on:
-  push:
-  pull_request:
-
-jobs:
-  verify:
-    runs-on: ubuntu-latest
-    container:
-      image: crystallang/crystal:1.11.2
-    steps:
-      - uses: actions/checkout@v4
-      - name: Verify
-        run: ./scripts/verify.sh
