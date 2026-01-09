@@ -1,0 +1,14 @@
+websites = ["https://example.com"]
+monitor_interval_seconds = 60
+request_timeout_seconds = 5.0
+report_output_dir = "reports"
+webhook_url = ""
+
+[thresholds]
+warning_seconds = 0.5
+critical_seconds = 1.5
+
+[server]
+enabled = false
+host = "127.0.0.1"
+port = 4000

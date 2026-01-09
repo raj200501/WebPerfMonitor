@@ -1,0 +1,14 @@
+websites = ["http://127.0.0.1:4567"]
+monitor_interval_seconds = 5
+request_timeout_seconds = 2.0
+report_output_dir = "tmp/reports"
+webhook_url = "http://127.0.0.1:5678/webhook"
+
+[thresholds]
+warning_seconds = 0.2
+critical_seconds = 0.6
+
+[server]
+enabled = true
+host = "127.0.0.1"
+port = 4568
