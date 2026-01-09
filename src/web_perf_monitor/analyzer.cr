@@ -1,13 +1,13 @@
 module WebPerfMonitor
   class Analyzer
     def analyze(metrics)
-      grouped = {}
+      grouped = {} of String => Array(Metric)
       metrics.each do |metric|
         grouped[metric.url] ||= []
         grouped[metric.url] << metric
       end
 
-      per_site = []
+      per_site = [] of SiteAnalysis
       total_failures = 0
 
       grouped.each do |url, entries|

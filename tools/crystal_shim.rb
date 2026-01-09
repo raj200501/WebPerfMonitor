@@ -19,6 +19,8 @@ module Kernel
       $LOADED_FEATURES << resolved
       source = File.read(resolved)
       source = source.gsub(/rescue\s+([a-zA-Z_]\w*)\s*:\s*Exception/, 'rescue => \1')
+      source = source.gsub(/\[\]\s+of\s+[A-Za-z0-9_:]+/, "[]")
+      source = source.gsub(/\{\}\s+of\s+[^\n]+/, "{}")
       temp_path = resolved + ".rbshim"
       File.write(temp_path, source)
       begin

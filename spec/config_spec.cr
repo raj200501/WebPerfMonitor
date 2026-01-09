@@ -6,7 +6,7 @@ TestSuite.test("loads default config when missing") do
 end
 
 TestSuite.test("validates invalid config") do
-  settings = WebPerfMonitor::Settings.new([], 0, 0.0, "", nil, WebPerfMonitor::Thresholds.new, WebPerfMonitor::ServerSettings.new)
+  settings = WebPerfMonitor::Settings.new([] of String, 0, 0.0, "", nil, WebPerfMonitor::Thresholds.new, WebPerfMonitor::ServerSettings.new)
   begin
     settings.validate
   rescue WebPerfMonitor::ConfigError

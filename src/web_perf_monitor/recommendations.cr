@@ -5,7 +5,7 @@ module WebPerfMonitor
     end
 
     def generate(analysis)
-      recommendations = []
+      recommendations = [] of Recommendation
 
       analysis.per_site.each do |site|
         max_seconds = site.summary.max_seconds

@@ -5,7 +5,7 @@ module WebPerfMonitor
     end
 
     def collect_metrics
-      metrics = []
+      metrics = [] of Metric
       @settings.websites.each do |website|
         metrics << measure(website)
       end
