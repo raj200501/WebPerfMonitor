@@ -3,15 +3,16 @@ require "uri"
 
 module Support
   class HttpResponse
-    getter status_code
-    getter body
+    getter status_code : Int32
+    getter body : String
 
-    def initialize(@status_code, @body)
+    def initialize(@status_code : Int32, @body : String)
     end
   end
 
   class HttpClient
-    def self.get(url, timeout_seconds)
+    def self.get(url : String, timeout_seconds : Float64) : HttpResponse
+      client : HTTP::Client? = nil
       uri = URI.parse(url)
       client = HTTP::Client.new(uri)
       timeout = Time::Span.from_seconds(timeout_seconds)
@@ -23,7 +24,13 @@ module Support
       client.try(&.close)
     end
 
-    def self.post(url, body, headers = {"Content-Type" => "application/json"}, timeout_seconds = 10.0)
+    def self.post(
+      url : String,
+      body : String,
+      headers : Hash(String, String) = {"Content-Type" => "application/json"},
+      timeout_seconds : Float64 = 10.0
+    ) : HttpResponse
+      client : HTTP::Client? = nil
       uri = URI.parse(url)
       client = HTTP::Client.new(uri)
       timeout = Time::Span.from_seconds(timeout_seconds)
