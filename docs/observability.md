@@ -4,14 +4,13 @@ This document covers logging and metrics practices for WebPerfMonitor.
 
 ## Logs
 
-WebPerfMonitor uses Python's standard `logging` module. The default log level is
-`INFO`. Adjust verbosity by setting the `LOG_LEVEL` environment variable and
-extending the CLI if needed.
+WebPerfMonitor prints operational logs to stdout. You can redirect output or use
+systemd/journald for centralized logs.
 
 Example:
 
 ```bash
-LOG_LEVEL=debug PYTHONPATH=src python -m web_perf_monitor.cli run-once
+./tools/crystal run src/main.cr -- run-once --config config/default.yml
 ```
 
 Common log messages:

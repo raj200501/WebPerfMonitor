@@ -1,14 +1,22 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if ! command -v python >/dev/null 2>&1; then
-  echo "Python is required but not found." >&2
+ROOT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
+
+if command -v crystal >/dev/null 2>&1; then
+  crystal --version
+  exit 0
+fi
+
+if [[ -x "${ROOT_DIR}/tools/crystal" ]]; then
+  if command -v ruby >/dev/null 2>&1; then
+    echo "Crystal compiler not found; using local shim."
+    "${ROOT_DIR}/tools/crystal" --version
+    exit 0
+  fi
+  echo "Crystal compiler not found and Ruby unavailable for shim." >&2
   exit 1
 fi
 
-python - <<'PY'
-import sys
-if sys.version_info < (3, 11):
-    raise SystemExit("Python 3.11+ is required")
-print(f"Python OK: {sys.version.split()[0]}")
-PY
+echo "Crystal compiler not found and shim missing." >&2
+exit 1

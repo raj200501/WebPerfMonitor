@@ -1,14 +1,14 @@
 # FAQ
 
-## Why Python?
+## Why Crystal?
 
-Python provides a mature standard library, quick iteration, and straightforward
-HTTP primitives, making it a good fit for a lightweight monitoring tool.
+Crystal offers a modern syntax with performance close to compiled languages and
+ships with a strong standard library for HTTP and JSON processing.
 
 ## Does WebPerfMonitor support HTTPS?
 
-Yes. The monitor uses Python's standard HTTP client, which supports HTTPS.
-Ensure that your runtime has access to the system's CA certificates.
+Yes. The monitor uses Crystal's HTTP client, which supports HTTPS. Ensure that
+your runtime has access to the system's CA certificates.
 
 ## Can I monitor multiple endpoints?
 
@@ -32,8 +32,8 @@ URLs or reduce the number of collection cycles.
 
 ## Can I change the report format?
 
-Yes. Update `ReportData` in `src/web_perf_monitor/report.py`. Ensure the changes
-are reflected in `docs/report-format.md` and update tests accordingly.
+Yes. Update `ReportData` in `src/web_perf_monitor/metrics.cr`. Ensure the
+changes are reflected in `docs/report-format.md` and update specs accordingly.
 
 ## Where are reports stored?
 
@@ -55,7 +55,7 @@ authenticated endpoints, consider using a proxy that injects headers.
 Enable `server.enabled` in the config and run:
 
 ```bash
-PYTHONPATH=src python -m web_perf_monitor.cli serve --config config/default.toml
+./tools/crystal run src/main.cr -- serve --config config/default.yml
 ```
 
 ## Why is the report server HTTP-only?
@@ -65,11 +65,11 @@ run it behind a reverse proxy.
 
 ## Does CI run integration tests?
 
-Yes. CI runs `./scripts/verify.sh`, which executes unit tests and a smoke test
-that starts local HTTP servers.
+Yes. CI runs `./scripts/verify.sh`, which executes specs and a smoke test that
+starts local HTTP servers.
 
 ## How do I add a new test target?
 
-Edit `config/default.toml` and add a new URL to `websites`. You can also keep
+Edit `config/default.yml` and add a new URL to `websites`. You can also keep
 separate config files per environment.
 

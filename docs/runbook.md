@@ -30,7 +30,7 @@ Webhook: Webhook delivered
 
 1. Confirm the process is running:
    ```bash
-   ps aux | grep web_perf_monitor
+   ps aux | grep webperfmonitor
    ```
 2. Check for exceptions in the logs.
 3. Validate that target URLs are accessible.
@@ -44,7 +44,7 @@ Webhook: Webhook delivered
    ```
 3. Restart the server command:
    ```bash
-   PYTHONPATH=src python -m web_perf_monitor.cli serve --config config/default.toml
+   ./tools/crystal run src/main.cr -- serve --config config/default.yml
    ```
 
 ### Webhook latency

@@ -7,9 +7,9 @@ on:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    container:
+      image: crystallang/crystal:1.11.2
     steps:
       - uses: actions/checkout@v4
-      - name: Bootstrap Python
-        run: ./scripts/bootstrap.sh
       - name: Verify
         run: ./scripts/verify.sh

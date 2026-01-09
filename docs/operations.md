@@ -11,14 +11,14 @@ cron jobs or ad-hoc checks.
 ./scripts/run.sh
 ```
 
-The command loads `config/default.toml` and writes a JSON report to `reports/`.
+The command loads `config/default.yml` and writes a JSON report to `reports/`.
 
 ## Running continuously
 
 Continuous mode runs a monitoring cycle every `monitor_interval_seconds`.
 
 ```bash
-PYTHONPATH=src python -m web_perf_monitor.cli monitor --config config/default.toml
+./tools/crystal run src/main.cr -- monitor --config config/default.yml
 ```
 
 You can stop the process with `Ctrl+C`.
@@ -29,7 +29,7 @@ The server exposes health checks and the latest report. Enable it in config and
 run:
 
 ```bash
-PYTHONPATH=src python -m web_perf_monitor.cli serve --config config/default.toml
+./tools/crystal run src/main.cr -- serve --config config/default.yml
 ```
 
 Endpoints:
@@ -39,8 +39,8 @@ Endpoints:
 
 ## Log output
 
-Logging uses Python's standard `logging` module. Set `LOG_LEVEL` to adjust
-verbosity (e.g., `LOG_LEVEL=DEBUG`).
+Logging uses standard output for now. If you need structured logs, wrap the
+process and redirect output to a log file.
 
 ## Report storage and rotation
 

@@ -2,9 +2,9 @@
 
 This guide lists common issues and how to resolve them.
 
-## "command not found: python"
+## "command not found: crystal"
 
-**Cause**: Python is not installed on the system.
+**Cause**: Crystal is not installed on the system.
 
 **Fix**:
 
@@ -12,7 +12,7 @@ This guide lists common issues and how to resolve them.
 ./scripts/bootstrap.sh
 ```
 
-The bootstrap script validates your Python version.
+If Crystal is not available, the project uses the local shim in `tools/crystal`.
 
 ## "ConfigError: Invalid website URL"
 
@@ -20,8 +20,9 @@ The bootstrap script validates your Python version.
 
 **Fix**: Ensure URLs are fully qualified:
 
-```toml
-websites = ["https://example.com"]
+```yaml
+websites:
+  - "https://example.com"
 ```
 
 ## "Server disabled in config"
@@ -30,17 +31,17 @@ websites = ["https://example.com"]
 
 **Fix**:
 
-```toml
-[server]
-enabled = true
-host = "127.0.0.1"
-port = 4000
+```yaml
+server:
+  enabled: true
+  host: "127.0.0.1"
+  port: 4000
 ```
 
 Then rerun:
 
 ```bash
-PYTHONPATH=src python -m web_perf_monitor.cli serve --config config/default.toml
+./tools/crystal run src/main.cr -- serve --config config/default.yml
 ```
 
 ## Reports are not written
@@ -70,12 +71,12 @@ PYTHONPATH=src python -m web_perf_monitor.cli serve --config config/default.toml
 
 ## Test failures in CI
 
-**Cause**: CI requires Python 3.11+.
+**Cause**: CI requires Crystal.
 
 **Fix**:
 
-* The workflow runs `scripts/bootstrap.sh` automatically. If that fails, ensure
-  your CI image has Python 3.11 or later.
+* The workflow uses a Crystal container to run `./scripts/verify.sh`. Ensure the
+  container image is available.
 
 ## High response times
 

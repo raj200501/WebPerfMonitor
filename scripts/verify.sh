@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-REPO_ROOT=$(cd "${SCRIPT_DIR}/.." && pwd)
+ROOT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 
-"${REPO_ROOT}/scripts/bootstrap.sh"
+"${ROOT_DIR}/scripts/bootstrap.sh"
 
-cd "${REPO_ROOT}"
+cd "${ROOT_DIR}"
 
-echo "Running unit tests..."
-PYTHONPATH="${REPO_ROOT}/src" python -m unittest discover -s tests -p "test_*.py"
+echo "Running specs..."
+WEBPERF_ROOT="${ROOT_DIR}" "${ROOT_DIR}/tools/crystal" run scripts/spec_runner.cr
 
 echo "Running smoke test..."
-PYTHONPATH="${REPO_ROOT}/src" python scripts/smoke.py
+WEBPERF_ROOT="${ROOT_DIR}" "${ROOT_DIR}/tools/crystal" run scripts/smoke.cr

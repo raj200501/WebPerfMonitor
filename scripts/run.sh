@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
-REPO_ROOT=$(cd "${SCRIPT_DIR}/.." && pwd)
+ROOT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 
-"${REPO_ROOT}/scripts/bootstrap.sh"
+"${ROOT_DIR}/scripts/bootstrap.sh"
 
-CONFIG_PATH=${1:-"${REPO_ROOT}/config/default.toml"}
+CONFIG_PATH=${1:-"${ROOT_DIR}/config/default.yml"}
 
-cd "${REPO_ROOT}"
-PYTHONPATH="${REPO_ROOT}/src" exec python -m web_perf_monitor.cli run-once --config "${CONFIG_PATH}"
+cd "${ROOT_DIR}"
+WEBPERF_ROOT="${ROOT_DIR}" exec "${ROOT_DIR}/tools/crystal" run src/main.cr -- run-once --config "${CONFIG_PATH}"

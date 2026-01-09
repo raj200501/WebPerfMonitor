@@ -1,0 +1,6 @@
+name: web_perf_monitor
+version: 0.3.0
+license: MIT
+crystal: ">= 1.6.0"
+
+# No external shards required.

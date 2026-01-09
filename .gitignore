@@ -2,8 +2,4 @@
 /tmp
 /reports
 /.tools
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
 *.dwarf

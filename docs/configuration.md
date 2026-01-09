@@ -1,31 +1,31 @@
 # Configuration Guide
 
 This guide describes all configuration options supported by WebPerfMonitor.
-Configuration is loaded from TOML and validated on startup.
+Configuration is loaded from YAML and validated on startup.
 
 ## Loading order
 
-1. CLI loads the TOML file specified by `--config`.
-2. If no path is provided, it looks for `config/default.toml`.
+1. CLI loads the YAML file specified by `--config`.
+2. If no path is provided, it looks for `config/default.yml`.
 3. If no file exists, defaults from `Settings` are used.
 
 ## Full example
 
-```toml
-websites = ["https://example.com", "https://status.example.com"]
-monitor_interval_seconds = 60
-request_timeout_seconds = 5.0
-report_output_dir = "reports"
-webhook_url = "https://hooks.example.net/webperf"
-
-[thresholds]
-warning_seconds = 0.5
-critical_seconds = 1.5
-
-[server]
-enabled = true
-host = "127.0.0.1"
-port = 4000
+```yaml
+websites:
+  - "https://example.com"
+  - "https://status.example.com"
+monitor_interval_seconds: 60
+request_timeout_seconds: 5.0
+report_output_dir: "reports"
+webhook_url: "https://hooks.example.net/webperf"
+thresholds:
+  warning_seconds: 0.5
+  critical_seconds: 1.5
+server:
+  enabled: true
+  host: "127.0.0.1"
+  port: 4000
 ```
 
 ## Settings reference
@@ -120,7 +120,7 @@ If configuration is invalid, WebPerfMonitor exits immediately with
 
 ## Tips for local development
 
-* Use `config/sample.toml` for localhost testing.
-* Point `webhook_url` to a local receiver (see `scripts/smoke.py`).
+* Use `config/sample.yml` for localhost testing.
+* Point `webhook_url` to a local receiver (see `scripts/smoke.cr`).
 * Set `monitor_interval_seconds` low for quick feedback.
 

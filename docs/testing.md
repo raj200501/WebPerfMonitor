@@ -1,24 +1,24 @@
 # Testing Guide
 
-WebPerfMonitor relies on deterministic unit tests and a smoke test to validate
+WebPerfMonitor relies on deterministic specs and a smoke test to validate
 end-to-end behavior.
 
 ## Test layers
 
-1. **Unit tests** (`tests/`) validate each module in isolation.
-2. **Smoke test** (`scripts/smoke.py`) spins up local HTTP servers and runs a
+1. **Specs** (`spec/`) validate each module in isolation.
+2. **Smoke test** (`scripts/smoke.cr`) spins up local HTTP servers and runs a
    full monitoring cycle.
 
-## Running tests locally
+## Running specs locally
 
 ```bash
-PYTHONPATH=src python -m unittest discover -s tests -p "test_*.py"
+./tools/crystal run scripts/spec_runner.cr
 ```
 
 ## Running the smoke test
 
 ```bash
-PYTHONPATH=src python scripts/smoke.py
+./tools/crystal run scripts/smoke.cr
 ```
 
 ## Full verification
@@ -31,13 +31,13 @@ PYTHONPATH=src python scripts/smoke.py
 
 ### Example: Testing a new analyzer metric
 
-1. Create a new test file under `tests/`.
+1. Create a new spec in `spec/`.
 2. Build a list of `Metric` objects with known response times.
 3. Assert the computed statistics.
 
 ### Example: Testing a new integration
 
-1. Spin up a local `HTTPServer` in the test.
+1. Spin up a local HTTP server in the spec.
 2. Configure the integration to use `http://127.0.0.1:<port>`.
 3. Assert that the integration returns success.
 

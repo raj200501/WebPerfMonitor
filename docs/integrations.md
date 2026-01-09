@@ -7,8 +7,8 @@ how to use it and how to extend it.
 
 To enable webhook delivery, set `webhook_url` in your config:
 
-```toml
-webhook_url = "https://hooks.example.net/webperf"
+```yaml
+webhook_url: "https://hooks.example.net/webperf"
 ```
 
 The webhook receives the full JSON report as the POST body with
@@ -24,7 +24,7 @@ status is considered a failure and recorded in `WebhookResult`.
 You can test with a local receiver by running the smoke test:
 
 ```bash
-PYTHONPATH=src python scripts/smoke.py
+./tools/crystal run scripts/smoke.cr
 ```
 
 This script spins up a local HTTP server that accepts POST requests.
@@ -36,9 +36,9 @@ integration class. Suggested approach:
 
 1. Add a new integration class under `src/web_perf_monitor`.
 2. Add a config option to `Settings`.
-3. Update `Runner._send_webhook` (or create a more general `send_integrations`)
+3. Update `Runner#send_webhook` (or create a more general integration runner)
    to route to the new integration.
-4. Add a new test that uses a local server.
+4. Add a new spec that uses a local server.
 
 ## Example: adding a Slack webhook
 
@@ -51,5 +51,5 @@ Pseudo steps:
 
 ## Testing integrations
 
-Use local HTTP servers in tests to avoid hitting external APIs.
+Use local HTTP servers in specs to avoid hitting external APIs.
 
