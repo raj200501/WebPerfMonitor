@@ -11,7 +11,7 @@ module WebPerfMonitor
       else
         WebhookResult.new(false, response.status_code, "Webhook failed with status #{response.status_code}")
       end
-    rescue => ex
+    rescue ex : Exception
       WebhookResult.new(false, nil, "Webhook failed: #{ex.message}")
     end
   end

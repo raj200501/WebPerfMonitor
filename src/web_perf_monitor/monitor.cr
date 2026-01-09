@@ -17,7 +17,7 @@ module WebPerfMonitor
       response = Support::HttpClient.get(url, @settings.request_timeout_seconds)
       duration = Support::TimeUtil.monotonic - start_time
       Metric.new(url, duration, response.status_code, nil)
-    rescue => ex
+    rescue ex : Exception
       duration = Support::TimeUtil.monotonic - start_time
       Metric.new(url, duration, nil, ex.message)
     end

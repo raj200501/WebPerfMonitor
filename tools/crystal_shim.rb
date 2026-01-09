@@ -17,7 +17,15 @@ module Kernel
       return false if $LOADED_FEATURES.include?(resolved)
 
       $LOADED_FEATURES << resolved
-      load resolved
+      source = File.read(resolved)
+      source = source.gsub(/rescue\s+([a-zA-Z_]\w*)\s*:\s*Exception/, 'rescue => \1')
+      temp_path = resolved + ".rbshim"
+      File.write(temp_path, source)
+      begin
+        load temp_path
+      ensure
+        File.delete(temp_path) if File.exist?(temp_path)
+      end
       return true
     end
 

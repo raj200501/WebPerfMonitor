@@ -8,7 +8,7 @@ module TestSuite
     @@tests_run += 1
     yield
     puts "PASS: #{name}"
-  rescue => ex
+  rescue ex : Exception
     @@failures += 1
     puts "FAIL: #{name} - #{ex.message}"
   end
